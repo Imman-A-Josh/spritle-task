@@ -53,3 +53,30 @@ exports.createTicket = async (req, res) => {
         return res.status(500).json({ message: "Ticket creation failed", error: error.response?.data || error.message });
     }
 };
+
+exports.getTicketConversation = async (req, res) => {
+
+    const domain = process.env.FRESHDESK_DOMAIN;
+    const api_key = process.env.FRESHDESK_API_KEY;
+    const ticket_id = req.params.ticket_id;
+
+    if (!domain || !api_key || !ticket_id) {
+        return res.status(400).json({ message: "Missing domain, api_key or ticket_id" });
+    }
+
+    try {
+        const url = `https://${domain}.freshdesk.com/api/v2/tickets/${ticket_id}/conversations`;
+
+        const response = await axios.get(url, {
+            headers: {
+                Authorization: 'Basic ' + Buffer.from(`${api_key}:X`).toString('base64')
+            }
+        });
+
+        res.status(200).json({ message: "Ticket conversation fetched", conversations: response.data });
+
+    } catch (error) {
+        console.error("Conversation fetch error:", error.response?.data || error.message);
+        res.status(500).json({ message: "Failed to fetch conversation", error: error.response?.data || error.message });
+    }
+};
