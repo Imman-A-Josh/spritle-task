@@ -81,3 +81,37 @@ HubSpot Contact Fetch by Email
 Webhook Integration (Freshdesk)
 
 Webhook Logs Table View
+
+## Sample User Credentials
+
+``` bash
+{
+    "email": "immanjosh4@gmail.com",
+    "password": "Admin@123"
+}
+```
+
+## Webhook Configuration – Freshdesk
+
+1. Login to your Freshdesk admin panel.
+2. Go to **Admin → Automations → Ticket Created → New Rule**
+3. Create a rule with the following:
+   - **Event:** When an agent updates a ticket
+   - **Action:** Trigger Webhook
+   - **Method:** POST
+   - **URL:** `https://spritle-task.onrender.com/api/freshdesk-webhook`
+   - **Content-Type:** application/json
+   - **Payload:**
+     ```json
+     {
+       "event": "ticket_created",
+       "ticket_id": "{{ticket.id}}",
+       "subject": "{{ticket.subject}}",
+       "status": "{{ticket.status}}",
+       "priority": "{{ticket.priority}}",
+       "requester_email": "{{ticket.requester.email}}"
+     }
+     ```
+4. Save the rule, then update a ticket to trigger the webhook.
+
+Repeat similar steps under **“Ticket Update”** tab to trigger for new ticket creation
