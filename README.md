@@ -31,6 +31,7 @@ npm install
 
 3. Create .env file with the following
 
+``` bash
 PORT=8080
 
 DB_HOST=localhost
@@ -46,6 +47,8 @@ JWT_SECRET=spritle_secret
 FRESHDESK_API_KEY=gCdrnkvJuyWUVxHdg7C
 
 FRESHDESK_DOMAIN=immanjosh4
+
+```
 
 4. Run the server:
 
