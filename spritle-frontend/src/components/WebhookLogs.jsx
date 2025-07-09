@@ -47,13 +47,23 @@ const WebhookLogs = () => {
                     {logs.map((log, index) => (
                         <tr key={log.id}>
                             <td style={styles.td}>{index + 1}</td>
-                            <td style={styles.td}>{log.event_type}</td>
+                            <td style={{
+                                ...styles.td,
+                                color: log.event_type === 'ticket_created' ? 'green' :
+                                    log.event_type === 'ticket_updated' ? 'blue' : 'gray',
+                                fontWeight: 'bold'
+                            }}>
+                                {log.event_type === 'ticket_created'
+                                    ? 'Ticket Created'
+                                        : 'Ticket Updated'}
+                            </td>
+
                             <td style={styles.td}>
                                 {new Date(log.createdAt).toLocaleString()}
                             </td>
                             <td style={styles.td}>
                                 <code style={styles.code}>
-                                    {JSON.stringify(JSON.parse(log.payload), null, 1).slice(0, 100)}...
+                                    {JSON.stringify(JSON.parse(log.payload), null, 2)}
                                 </code>
                             </td>
                         </tr>

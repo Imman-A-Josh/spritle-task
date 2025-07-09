@@ -45,6 +45,7 @@ const TicketList = () => {
                     <tr>
                         <th style={styles.th}>S.No</th>
                         <th style={styles.th}>Subject</th>
+                        <th style={styles.th}>Ticket Id</th>
                         <th style={styles.th}>Status</th>
                         <th style={styles.th}>Priority</th>
                     </tr>
@@ -58,6 +59,7 @@ const TicketList = () => {
                                     {ticket.subject}
                                 </a>
                             </td>
+                            <td style={styles.td}>{ticket.id}</td>
                             <td
                                 style={{
                                     ...styles.td,
