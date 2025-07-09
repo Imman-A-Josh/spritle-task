@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import api from '../api/axios';
 
 const Login = () => {
     const [form, setForm] = useState({ email: '', password: '' });
     const [message, setMessage] = useState('');
+
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
@@ -24,6 +27,7 @@ const Login = () => {
             }
 
             setMessage(response.data.message || 'Login successful');
+            setTimeout(() => navigate('/tickets'), 1000);
 
         } catch (error) {
             setMessage(error.response?.data?.message || 'Login failed');
