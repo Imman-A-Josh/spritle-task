@@ -80,3 +80,63 @@ exports.getTicketConversation = async (req, res) => {
         res.status(500).json({ message: "Failed to fetch conversation", error: error.response?.data || error.message });
     }
 };
+
+exports.getHubSpotContact = async (req, res) => {
+
+    const { email } = req.body;
+
+    var token = process.env.HUBSPOT_TOKEN;
+
+    if (!token || !email) {
+        return res.status(400).json({ message: "Token and email are required" });
+    }
+
+    try {
+        const response = await axios.post(
+            'https://api.hubapi.com/crm/v3/objects/contacts/search',
+            {
+                filterGroups: [
+                    {
+                        filters: [
+                            {
+                                propertyName: "email",
+                                operator: "EQ",
+                                value: email
+                            }
+                        ]
+                    }
+                ],
+                properties: ["firstname", "lastname", "email", "phone", "lifecyclestage", "company"]
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            }
+        );
+
+        const results = response.data.results;
+
+        if (!results.length) {
+            return res.status(201).json({ message: "Contact not found in HubSpot" });
+        }
+
+        const contact = results[0].properties;
+
+        res.status(200).json({
+            message: "Contact found in HubSpot",
+            contact: {
+                name: `${contact.firstname || ""} ${contact.lastname || ""}`.trim(),
+                email: contact.email,
+                phone: contact.phone,
+                lifecycle_stage: contact.lifecyclestage,
+                company: contact.company
+            }
+        });
+
+    } catch (error) {
+        console.error("HubSpot API error:", error.response?.data || error.message);
+        return res.status(500).json({ message: "HubSpot contact fetch failed", error: error.message });
+    }
+};

@@ -8,4 +8,6 @@ router.post('/create-ticket', freshdeskController.createTicket);
 
 router.get('/ticket-conversations/:ticket_id', freshdeskController.getTicketConversation);
 
+router.post('/contact', freshdeskController.getHubSpotContact);
+
 module.exports = router;
