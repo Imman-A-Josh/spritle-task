@@ -32,14 +32,22 @@ npm install
 3. Create .env file with the following
 
 PORT=8080
+
 DB_HOST=localhost
+
 DB_USER=root
+
 DB_PASS=root
+
 DB_NAME=spritle_task
+
 JWT_SECRET=spritle_secret
+
 FRESHDESK_API_KEY=gCdrnkvJuyWUVxHdg7C
+
 FRESHDESK_DOMAIN=immanjosh4
-HUBSPOT_TOKEN=pat-na2-85372677-0b3a-4d5d-8ee0-1aa2be0af692
+
+HUBSPOT_TOKEN=pat-na2-c2e98d08-116f-4767-8bfb-e64eacce0c5c
 
 4. Run the server:
 

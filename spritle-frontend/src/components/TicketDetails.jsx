@@ -22,7 +22,6 @@ const TicketDetails = () => {
                 setConversations(response.data.conversations);
 
                 const firstEmail = response.data.conversations[0]?.to_emails?.[0];
-                console.log("==========firstEmail",firstEmail);
                 
                 if (firstEmail) {
                     fetchHubspotContact(firstEmail);
